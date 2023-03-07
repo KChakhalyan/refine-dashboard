@@ -13,27 +13,31 @@ const home = () => {
                title="Properties for sale"
                value={684}
                series={[75, 25]}
-               colors={["#475be8", "#e4e8ef"]}
+               colors={["#475be8", "#E4E8EF"]}
             />
             <PieChart
                title="Properties for rent"
                value={550}
                series={[60, 40]}
-               colors={["#47abe8", "#e4b8ef"]}
+               colors={["#FD8539", "#E4E8EF"]}
             />
             <PieChart
                title="Total customers"
                value={5684}
                series={[75, 25]}
-               colors={["#375be8", "#A4e8ef"]}
+               colors={["#2ED480", "#E4E8EF"]}
             />
             <PieChart
                title="Properties for Cities"
                value={555}
                series={[75, 25]}
-               colors={["#475be8", "#e4e8ef"]}
+               colors={["#FE6D8E", "#E4E8EF"]}
             />
          </Box>
+         <Stack mt={2} width="100%" direction={{ xs: "column", lg: "row" }}>
+            <TotalRevenue />
+            <PropertyReferrals />
+         </Stack>
       </Box>
    );
 };
