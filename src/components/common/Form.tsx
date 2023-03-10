@@ -25,10 +25,17 @@ const Form = ({
 }: FormProps) => {
    return (
       <Box>
-         <Typography fontSize={25} fontWeight={700} color="#11142d">
+         <Typography fontSize={25} fontWeight={700} color="#11142d" textAlign="center" mb={3}>
             {type} a Property
          </Typography>
-         <Box mt={2.5} borderRadius={1} padding={4} bgcolor="#fcfcfc">
+         <Box
+            mt={2.5}
+            borderRadius={1}
+            padding={4}
+            bgcolor="#fcfcfc"
+            width="70%"
+            sx={{ margin: " 0 auto" }}
+         >
             <form
                style={{
                   marginTop: "20px",
@@ -111,7 +118,76 @@ const Form = ({
                         <MenuItem value="chalet">Chalet</MenuItem>
                      </Select>
                   </FormControl>
+                  {/* End of Select */}
+                  <FormControl>
+                     <FormHelperText
+                        sx={{ fontWeight: 500, margin: "10px 0", fontSize: 16, color: "#11142d" }}
+                     >
+                        Enter Property Price
+                     </FormHelperText>
+                     <TextField
+                        id="outlined-basic"
+                        fullWidth
+                        required
+                        type="number"
+                        color="info"
+                        variant="outlined"
+                        {...register("price", { required: true })}
+                     />
+                  </FormControl>
                </Stack>
+               <FormControl>
+                  <FormHelperText
+                     sx={{ fontWeight: 500, margin: "10px 0", fontSize: 16, color: "#11142d" }}
+                  >
+                     Enter Location
+                  </FormHelperText>
+                  <TextField
+                     id="outlined-basic"
+                     fullWidth
+                     required
+                     color="info"
+                     variant="outlined"
+                     {...register("location", { required: true })}
+                  />
+               </FormControl>
+               <Stack direction="column" gap={1} justifyContent="center" mb={2}>
+                  <Stack direction="row" gap={2}>
+                     <Typography color="#11142d" fontSize={16} fontWeight={500} my="10px">
+                        Property Photo
+                     </Typography>
+
+                     <Button
+                        component="label"
+                        sx={{
+                           width: "fit-content",
+                           color: "#2ed480",
+                           textTransform: "capitalize",
+                           fontSize: 16,
+                        }}
+                     >
+                        Upload *
+                        <input
+                           hidden
+                           accept="image/*"
+                           type="file"
+                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                              handleImageChange(e.target.files![0]);
+                           }}
+                        />
+                     </Button>
+                  </Stack>
+                  <Typography fontSize={14} color="#808191" sx={{ wordBreak: "break-all" }}>
+                     {propertyImage?.name}
+                  </Typography>
+               </Stack>
+
+               <CustomButton
+                  type="submit"
+                  title={formLoading ? "Submitting..." : "Submit"}
+                  backgroundColor="#475be8"
+                  color="#fcfcfc"
+               />
             </form>
          </Box>
       </Box>
