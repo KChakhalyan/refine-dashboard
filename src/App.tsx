@@ -59,9 +59,7 @@ function App() {
          // Save user to MongoDB
 
          if (profileObj) {
-            //
-            const respornse = await fetch("http://localhost:8080/api/1v/users", {
-               //
+            const respornse = await fetch("http://localhost:8080/api/users", {
                method: "POST",
                headers: { "Content-Type": "application/json" },
                body: JSON.stringify({
