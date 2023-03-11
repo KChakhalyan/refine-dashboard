@@ -57,8 +57,11 @@ function App() {
          const profileObj = credential ? parseJwt(credential) : null;
 
          // Save user to MongoDB
+
          if (profileObj) {
+            //
             const respornse = await fetch("http://localhost:8080/api/1v/users", {
+               //
                method: "POST",
                headers: { "Content-Type": "application/json" },
                body: JSON.stringify({
@@ -67,16 +70,21 @@ function App() {
                   avatar: profileObj.picture,
                }),
             });
-         }
 
-         if (profileObj) {
-            localStorage.setItem(
-               "user",
-               JSON.stringify({
-                  ...profileObj,
-                  avatar: profileObj.picture,
-               })
-            );
+            const data = await respornse.json();
+
+            if (respornse.status === 200) {
+               localStorage.setItem(
+                  "user",
+                  JSON.stringify({
+                     ...profileObj,
+                     avatar: profileObj.picture,
+                     userid: data._id,
+                  })
+               );
+            } else {
+               return Promise.reject();
+            }
          }
 
          localStorage.setItem("token", `${credential}`);
