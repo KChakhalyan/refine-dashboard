@@ -1,10 +1,19 @@
 import { Add } from "@mui/icons-material";
-import { useList } from "@pankod/refine-core";
+import { useTable } from "@pankod/refine-core";
 import { Box, Stack, Typography } from "@pankod/refine-mui";
 import { useNavigate } from "@pankod/refine-react-router-v6";
 import { PropertyCard, CustomButton } from "components";
 const AllProperties = () => {
    const navigate = useNavigate();
+
+   const {
+      tableQueryResult: { data, isLoading, isError },
+   } = useTable();
+
+   const allProperties = data?.data ?? [];
+
+   if (isLoading) <Typography>Loading...</Typography>;
+   if (isError) <Typography>Something went wrong!</Typography>;
 
    return (
       <Box>
@@ -20,6 +29,18 @@ const AllProperties = () => {
                icon={<Add />}
             />
          </Stack>
+         <Box mt={3} sx={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
+            {allProperties.map((property) => (
+               <PropertyCard
+                  key={property._id}
+                  id={property._id}
+                  title={property.title}
+                  price={property.price}
+                  location={property.location}
+                  photo={property.photo}
+               />
+            ))}
+         </Box>
       </Box>
    );
 };
