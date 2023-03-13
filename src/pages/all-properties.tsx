@@ -59,6 +59,7 @@ const AllProperties = () => {
                         required
                         inputProps={{ "aria-label": "Without-label" }}
                         defaultValue=""
+                        value=""
                         onChange={() => {}}
                      >
                         <MenuItem value="">All</MenuItem>
@@ -112,6 +113,21 @@ const AllProperties = () => {
                   color="#fcfcfc"
                   disabled={current === pageCount}
                />
+               <Select
+                  variant="outlined"
+                  color="info"
+                  displayEmpty
+                  required
+                  inputProps={{ "aria-label": "Without-label" }}
+                  defaultValue={10}
+                  onChange={() => {}}
+               >
+                  {[10, 20, 30, 40, 50].map((size) => (
+                     <MenuItem key={size} value={size}>
+                        Show {size}
+                     </MenuItem>
+                  ))}
+               </Select>
             </Box>
          )}
       </Box>
