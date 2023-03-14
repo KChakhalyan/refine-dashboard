@@ -3,6 +3,7 @@ import { useTable } from "@pankod/refine-core";
 import { Box, Stack, TextField, Typography, Select, MenuItem } from "@pankod/refine-mui";
 import { useNavigate } from "@pankod/refine-react-router-v6";
 import { PropertyCard, CustomButton } from "components";
+import { useMemo } from "react";
 const AllProperties = () => {
    const navigate = useNavigate();
 
@@ -19,6 +20,18 @@ const AllProperties = () => {
    } = useTable();
 
    const allProperties = data?.data ?? [];
+
+   const currentPriece = sorter.find((item) => item.field === "price")?.order;
+
+   const toggleSort = (field: string) => {
+      setSorter([{ field, order: currentPriece === "asc" ? "desc" : "asc" }]);
+   };
+
+   const currentFilterValues = useMemo(() => {
+      const logicalFilters = filters.flatMap((item) => ("field" in item ? [item] : []));
+
+      return logicalFilters.find((item) => item.field === "title")?.value ?? "";
+   }, [filters]);
 
    if (isLoading) <Typography>Loading...</Typography>;
    if (isError) <Typography>Something went wrong!</Typography>;
@@ -40,8 +53,8 @@ const AllProperties = () => {
                >
                   <Box display="flex" gap={2} flexWrap="wrap" mb={{ xs: "20px", sm: 0 }}>
                      <CustomButton
-                        title={`Sort by Price `}
-                        handleClick={() => {}}
+                        title={`Sort by Price ${currentPriece === "asc" ? "↑" : "↓"}`}
+                        handleClick={() => toggleSort("price")}
                         backgroundColor="#475be8"
                         color="#fcfcfc"
                      />
@@ -49,8 +62,16 @@ const AllProperties = () => {
                         variant="outlined"
                         color="info"
                         placeholder="Search by title"
-                        value=""
-                        onChange={() => {}}
+                        value={currentFilterValues.title}
+                        onChange={(e) => {
+                           setFilters([
+                              {
+                                 field: "title",
+                                 operator: "contains",
+                                 value: e.target.value ? e.currentTarget.value : undefined,
+                              },
+                           ]);
+                        }}
                      />
                      <Select
                         variant="outlined"
